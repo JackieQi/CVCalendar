@@ -309,7 +309,7 @@ extension CVCalendarDayView {
                                                     rect: markerFrame, shape: .circle)
                     dotMarker.fillColor = color
                     dotMarker.center = CGPoint(x: x, y: y)
-                    insertSubview(dotMarker, at: 0)
+                    addSubview(dotMarker)
 
                     dotMarker.setNeedsDisplay()
                     dotMarkers.append(dotMarker)

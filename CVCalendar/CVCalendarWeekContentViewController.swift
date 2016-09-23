@@ -99,6 +99,14 @@ public final class CVCalendarWeekContentViewController: CVCalendarContentViewCon
                 replaceWeekView(followingWeek, withIdentifier: self.presented, animatable: true)
 
                 insertWeekView(getFollowingWeek(followingWeek), withIdentifier: following)
+                let availableDates = followingWeek.dayViews.flatMap({ dayView -> Date? in
+                    if dayView.isHidden { return nil }
+                        if !calendarView.shouldShowWeekdaysOut && dayView.isOut { return nil }
+                            return dayView.date?.convertedDate()
+                })
+                if let firstDate = availableDates.first {
+                    calendarView.delegate?.didShowNextWeekView?(date: firstDate)
+                }
             }
         }
     }
@@ -113,6 +121,14 @@ public final class CVCalendarWeekContentViewController: CVCalendarContentViewCon
                 replaceWeekView(previousWeek, withIdentifier: presented, animatable: true)
 
                 insertWeekView(getPreviousWeek(previousWeek), withIdentifier: previous)
+                let availableDates = previousWeek.dayViews.flatMap({ dayView -> Date? in
+                if dayView.isHidden { return nil }
+                if !calendarView.shouldShowWeekdaysOut && dayView.isOut { return nil }
+                    return dayView.date?.convertedDate()
+                })
+                if let firstDate = availableDates.first {
+                    calendarView.delegate?.didShowPreviousWeekView?(date: firstDate)
+                }
             }
         }
     }
